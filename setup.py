@@ -1,6 +1,12 @@
 import setuptools
-from pip.req import parse_requirements
-from pip.download import PipSession
+
+try:  # for pip >= 10
+    from pip._internal.req import parse_requirements
+    from pip._internal.download import PipSession
+except ImportError:  # for pip <= 9.0.3
+    from pip.req import parse_requirements
+    from pip.download import PipSession
+
 
 ext_files = ['pyreBloom/bloom.c']
 
@@ -26,7 +32,7 @@ ext_modules = [Extension("pyreBloom", ext_files, libraries=['hiredis'],
 
 setuptools.setup(
     name='pyreBloom-ng',
-    version='0.0.1',
+    version='0.0.2',
     url='https://github.com/leovp/pyreBloom-ng',
     license='MIT',
 
